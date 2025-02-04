@@ -1,6 +1,7 @@
 package com.goodbird.cnpcgeckoaddon.entity;
 
 import com.goodbird.cnpcgeckoaddon.CNPCGeckoAddon;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.GeckoLib;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -77,6 +79,11 @@ public class EntityCustomModel extends Animal implements GeoAnimatable, GeoEntit
         this.noCulling = true;
     }
 
+    @Override
+    public boolean isFood(@NotNull ItemStack itemStack) {
+        return false;
+    }
+
     public void setSize(float width, float height) {
         dims = EntityDimensions.scalable(width, height);
     }
@@ -114,9 +121,9 @@ public class EntityCustomModel extends Animal implements GeoAnimatable, GeoEntit
         return null;
     }
 
-    public double getAttributeValue(Attribute p_233637_1_) {
+    public double getAttributeValue(Attribute attribute) {
         try {
-            return this.getAttributes().getValue(p_233637_1_);
+            return this.getAttributes().getValue((Holder<Attribute>) attribute);
         }catch (Exception e){
             return 1.0;
         }
