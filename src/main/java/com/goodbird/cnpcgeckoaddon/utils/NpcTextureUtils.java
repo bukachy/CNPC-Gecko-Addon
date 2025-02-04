@@ -20,10 +20,10 @@ public class NpcTextureUtils {
     public static ResourceLocation getNpcTexture(EntityNPCInterface npc) {
         if (npc.textureLocation == null) {
             if (npc.display.skinType == 0) {
-                npc.textureLocation = new ResourceLocation(npc.display.getSkinTexture());
+                npc.textureLocation = ResourceLocation.parse(npc.display.getSkinTexture());
             } else {
                 if (RenderNPCInterface.LastTextureTick < 5) {
-                    return DefaultPlayerSkin.getDefaultSkin();
+                    return DefaultPlayerSkin.getDefaultTexture();
                 }
 
                 if (npc.display.skinType == 1 && npc.display.playerProfile != null) {
@@ -50,7 +50,7 @@ public class NpcTextureUtils {
                             sb.append(String.format("%02x", b & 255));
                         }
 
-                        npc.textureLocation = new ResourceLocation("customnpcs", "skins/" + sb + size);
+                        npc.textureLocation = ResourceLocation.fromNamespaceAndPath("customnpcs", "skins/" + sb + size);
                         loadSkin(null, npc.textureLocation, npc.display.getSkinUrl(), !size.isEmpty());
                     } catch (Exception var10) {
                         var10.printStackTrace();
@@ -59,13 +59,13 @@ public class NpcTextureUtils {
             }
         }
 
-        return npc.textureLocation == null ? DefaultPlayerSkin.getDefaultSkin() : npc.textureLocation;
+        return npc.textureLocation == null ? DefaultPlayerSkin.getDefaultTexture() : npc.textureLocation;
     }
     private static void loadSkin(File file, ResourceLocation resource, String par1Str, boolean fix64) {
         TextureManager texturemanager = Minecraft.getInstance().getTextureManager();
         AbstractTexture object = texturemanager.getTexture(resource);
         if (object == null) {
-            object = new ImageDownloadAlt(file, par1Str, resource, DefaultPlayerSkin.getDefaultSkin(), fix64, () -> {});
+            object = new ImageDownloadAlt(file, par1Str, resource, DefaultPlayerSkin.getDefaultTexture(), fix64, () -> {});
             texturemanager.register(resource, object);
         }
 

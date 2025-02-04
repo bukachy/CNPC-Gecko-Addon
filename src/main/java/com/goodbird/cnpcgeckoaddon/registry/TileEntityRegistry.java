@@ -1,7 +1,6 @@
 package com.goodbird.cnpcgeckoaddon.registry;
 
 import com.goodbird.cnpcgeckoaddon.CNPCGeckoAddon;
-import com.goodbird.cnpcgeckoaddon.tile.TileEntityCustomModel;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
