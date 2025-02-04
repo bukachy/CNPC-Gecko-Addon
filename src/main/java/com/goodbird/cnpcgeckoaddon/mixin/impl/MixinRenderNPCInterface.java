@@ -26,9 +26,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderNPCInterface.class)
 public abstract class MixinRenderNPCInterface <T extends EntityNPCInterface, M extends EntityModel<T>> extends LivingEntityRenderer<T, M> {
 
-    @Shadow(remap = false)
-    public abstract void renderNameTag(T npc, Component text, PoseStack matrixStack, MultiBufferSource buffer, int light);
-
     public MixinRenderNPCInterface() {
         super(null,null,0);
     }
@@ -46,9 +43,9 @@ public abstract class MixinRenderNPCInterface <T extends EntityNPCInterface, M e
     public void cnpcgeckoaddon$drawNameStandalone(T p_225623_1_, float p_225623_2_, float p_225623_3_, PoseStack p_225623_4_, MultiBufferSource p_225623_5_, int p_225623_6_){
         RenderNameTagEvent renderNameplateEvent = new RenderNameTagEvent(p_225623_1_, p_225623_1_.getDisplayName(), this, p_225623_4_, p_225623_5_, p_225623_6_, p_225623_3_);
         NeoForge.EVENT_BUS.post(renderNameplateEvent);
-        if (renderNameplateEvent.getResult() != net.minecraftforge.eventbus.api.Event.Result.DENY && (renderNameplateEvent.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW || this.shouldShowName(p_225623_1_))) {
-            this.renderNameTag(p_225623_1_, renderNameplateEvent.getContent(), p_225623_4_, p_225623_5_, p_225623_6_);
-        }
+//        if (renderNameplateEvent.getResult() != net.minecraftforge.eventbus.api.Event.Result.DENY && (renderNameplateEvent.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW || this.shouldShowName(p_225623_1_))) {
+//            this.renderNameTag(p_225623_1_, renderNameplateEvent.getContent(), p_225623_4_, p_225623_5_, p_225623_6_);
+//        }
     }
 
 
