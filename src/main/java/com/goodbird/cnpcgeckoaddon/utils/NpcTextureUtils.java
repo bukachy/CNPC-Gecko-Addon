@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import noppes.npcs.client.renderer.RenderNPCInterface;
 import noppes.npcs.entity.EntityCustomNpc;
@@ -15,6 +16,7 @@ import noppes.npcs.shared.client.util.ImageDownloadAlt;
 import java.io.File;
 import java.security.MessageDigest;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class NpcTextureUtils {
     public static ResourceLocation getNpcTexture(EntityNPCInterface npc) {
@@ -28,10 +30,10 @@ public class NpcTextureUtils {
 
                 if (npc.display.skinType == 1 && npc.display.playerProfile != null) {
                     Minecraft minecraft = Minecraft.getInstance();
-                    Map map = minecraft.getSkinManager().getInsecureSkinInformation(npc.display.playerProfile);
-                    if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-                        npc.textureLocation = minecraft.getSkinManager().registerTexture((MinecraftProfileTexture) map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
-                    }
+                    CompletableFuture<PlayerSkin> future = minecraft.getSkinManager().getOrLoad(npc.display.playerProfile);
+                    future.thenAccept(playerSkin -> {
+                        npc.textureLocation = playerSkin.texture();
+                    });
                 } else if (npc.display.skinType == 2) {
                     try {
                         String size = "";
