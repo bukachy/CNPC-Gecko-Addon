@@ -9,23 +9,19 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.util.RenderUtils;
+import software.bernie.geckolib.util.RenderUtil;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class RenderCustomModel extends GeoEntityRenderer<EntityCustomModel> {
@@ -39,6 +35,7 @@ public class RenderCustomModel extends GeoEntityRenderer<EntityCustomModel> {
         return RenderType.entityTranslucent(getTextureLocation(animatable));
     }
 
+    @SuppressWarnings("removal")
     protected void applyRotations(EntityCustomModel entityLiving, PoseStack matrixStackIn, float ageInTicks, float rotationYaw,
                                   float partialTicks) {
         Pose pose = entityLiving.getPose();
@@ -63,7 +60,7 @@ public class RenderCustomModel extends GeoEntityRenderer<EntityCustomModel> {
                     .mulPose(Axis.YP.rotationDegrees(((float) entityLiving.tickCount + partialTicks) * -75.0F));
         } else if (pose == Pose.SLEEPING) {
             Direction direction = entityLiving.getBedOrientation();
-            float f1 = direction != null ? RenderUtils.getDirectionAngle(direction) : rotationYaw;
+            float f1 = direction != null ? RenderUtil.getDirectionAngle(direction) : rotationYaw;
             matrixStackIn.mulPose(Axis.YP.rotationDegrees(f1));
             matrixStackIn.mulPose(Axis.ZP.rotationDegrees(this.getDeathMaxRotation(entityLiving)));
             matrixStackIn.mulPose(Axis.YP.rotationDegrees(270.0F));
@@ -78,6 +75,7 @@ public class RenderCustomModel extends GeoEntityRenderer<EntityCustomModel> {
     }
 
     @Override
+    @SuppressWarnings("removal")
     public void defaultRender(PoseStack poseStack, EntityCustomModel animatable, MultiBufferSource bufferSource, @org.jetbrains.annotations.Nullable RenderType renderType, @org.jetbrains.annotations.Nullable VertexConsumer buffer, float yaw, float partialTick, int packedLight) {
         BakedGeoModel bakedModel = getGeoModel().getBakedModel(getGeoModel().getModelResource(animatable));
         if (bakedModel.getBone("held_item").isPresent()) {
