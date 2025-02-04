@@ -35,7 +35,7 @@ public class EntityRegistry {
         builder.setShouldReceiveVelocityUpdates(velocity);
         builder.sized(width, height);
         builder.clientTrackingRange(4);
-        final ResourceLocation registryName = new ResourceLocation(CNPCGeckoAddon.MODID, name);
+        final ResourceLocation registryName = ResourceLocation.fromNamespaceAndPath(CNPCGeckoAddon.MODID, name);
         registry.register(registryName, builder.build(registryName.toString()));
     }
 
