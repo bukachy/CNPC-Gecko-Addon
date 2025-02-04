@@ -42,7 +42,7 @@ public abstract class TileScriptedMixin extends BlockEntity {
     public void getDisplayNBT(CompoundTag compound, HolderLookup.Provider registries, CallbackInfoReturnable<CompoundTag> cir) {
         if(renderTile!=null && renderTile instanceof TileEntityCustomModel) {
             CompoundTag saveTag = new CompoundTag();
-            ((TileEntityCustomModel)renderTile).saveAdditional(saveTag);
+            ((TileEntityCustomModel)renderTile).saveAdditional(saveTag, registries);
             compound.put("renderTileTag", saveTag);
         }
     }

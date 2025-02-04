@@ -65,7 +65,7 @@ public class TileEntityCustomModel extends BlockEntity implements GeoAnimatable,
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
+    public void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putString("modelResLoc", modelResLoc.toString());
         tag.putString("animResLoc", animResLoc.toString());
