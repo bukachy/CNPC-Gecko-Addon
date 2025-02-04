@@ -12,7 +12,7 @@ import java.util.Vector;
 public class AnimationFileUtil {
     public static List<String> getAnimationList(String animFileName) {
         Vector<String> list = new Vector<>();
-        BakedAnimations file = GeckoLibCache.getBakedAnimations().get(ResourceLocation.fromNamespaceAndPath(CNPCGeckoAddon.MODID, animFileName));
+        BakedAnimations file = GeckoLibCache.getBakedAnimations().get(ResourceLocation.parse(animFileName));
         if (file != null) {
             for (Animation anim : file.animations().values()) {
                 list.add(anim.name());
