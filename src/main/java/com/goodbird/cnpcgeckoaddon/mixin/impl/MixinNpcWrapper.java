@@ -4,6 +4,7 @@ import com.goodbird.cnpcgeckoaddon.data.CustomModelData;
 import com.goodbird.cnpcgeckoaddon.mixin.IDataDisplay;
 import com.goodbird.cnpcgeckoaddon.network.NetworkWrapper;
 import com.goodbird.cnpcgeckoaddon.network.PacketSyncAnimation;
+import net.neoforged.neoforge.network.PacketDistributor;
 import noppes.npcs.api.entity.IPlayer;
 import noppes.npcs.api.wrapper.EntityLivingWrapper;
 import noppes.npcs.api.wrapper.NPCWrapper;
@@ -56,10 +57,10 @@ public class MixinNpcWrapper<T extends EntityNPCInterface> extends EntityLivingW
 
     @Unique
     public void syncAnimationsFor(IPlayer player, RawAnimation builder) {
-        NetworkWrapper.sendToPlayer(new PacketSyncAnimation(entity.getId(),builder), player.getMCEntity());
+        PacketDistributor.sendToPlayer(player.getMCEntity(), new PacketSyncAnimation(entity.getId(), PacketSyncAnimation.encodeAnim(builder)));
     }
     @Unique
     public void syncAnimationsForAll(RawAnimation builder) {
-        NetworkWrapper.sendToAll(new PacketSyncAnimation(entity.getId(),builder));
+        PacketDistributor.sendToAllPlayers(new PacketSyncAnimation(entity.getId(), PacketSyncAnimation.encodeAnim(builder)));
     }
 }

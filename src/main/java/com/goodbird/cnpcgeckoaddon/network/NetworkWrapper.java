@@ -3,34 +3,36 @@ package com.goodbird.cnpcgeckoaddon.network;
 import com.goodbird.cnpcgeckoaddon.CNPCGeckoAddon;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.registration.HandlerThread;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
+@EventBusSubscriber(modid = CNPCGeckoAddon.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class NetworkWrapper {
-    private static final String PROTOCOL = "10";
-    public static final SimpleChannel wrapper = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(CNPCGeckoAddon.MODID,"chan"),
-            () -> PROTOCOL,
-            PROTOCOL::equals,
-            PROTOCOL::equals
-    );
 
 
-    public static void init() {
-        wrapper.registerMessage(0,PacketSyncAnimation.class,PacketSyncAnimation::encode,PacketSyncAnimation::decode,PacketSyncAnimation::handle);
-        wrapper.registerMessage(1,PacketSyncTileAnimation.class,PacketSyncTileAnimation::encode,PacketSyncTileAnimation::decode,PacketSyncTileAnimation::handle);
-    }
+//    public static void init() {
+//        wrapper.registerMessage(0,PacketSyncAnimation.class,PacketSyncAnimation::encode,PacketSyncAnimation::decode,PacketSyncAnimation::handle);
+//        wrapper.registerMessage(1,PacketSyncTileAnimation.class,PacketSyncTileAnimation::encode,PacketSyncTileAnimation::decode,PacketSyncTileAnimation::handle);
+//    }
 
 
-    public static void sendToPlayer(Object message, ServerPlayer player) {
-        wrapper.sendTo(message, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-    }
+    @SubscribeEvent
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1");
 
+        registrar.executesOn(HandlerThread.NETWORK);
 
-    public static void sendToAll(Object message) {
-        for(ServerPlayer player: ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
-            sendToPlayer(message,player);
+        registrar.playBidirectional(
+                PacketSyncAnimation.TYPE,
+                PacketSyncAnimation.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        PacketSyncAnimation::handle,
+                        PacketSyncAnimation::handle
+                )
+        );
     }
 }
