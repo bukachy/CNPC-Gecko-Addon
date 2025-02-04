@@ -1,21 +1,22 @@
 {
-  "minVersion": "0.7.11",
-  "compatibilityLevel": "JAVA_17",
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_21",
   "package": "com.goodbird.cnpcgeckoaddon.mixin.impl",
   "refmap": "mixins.cnpcgeckoaddon.refmap.json",
   "mixins": [
-    "MixinBlockScriptedWrapper",
     "MixinDataDisplay",
     "MixinEntityCustomNpc",
     "MixinEntityUtil",
     "MixinNpcWrapper",
-    "MixinWrapperNpcApi",
-    "TileScriptedMixin"
+    "MixinWrapperNpcApi"
   ],
   "client": [
-    "MixinBlockScriptedRenderer",
     "MixinGuiCreationEntities",
     "MixinRenderNPCInterface"
   ],
-  "server": []
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
