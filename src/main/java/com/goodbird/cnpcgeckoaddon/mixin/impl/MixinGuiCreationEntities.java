@@ -30,8 +30,7 @@ public class MixinGuiCreationEntities extends GuiCreationScreenInterface {
 
     @Inject(method = "init",at = @At("TAIL"))
     public void init(CallbackInfo ci){
-        if(npc instanceof EntityCustomNpc && ((EntityCustomNpc)npc).modelData.getEntity(npc) instanceof EntityCustomModel) {
-            EntityCustomModel customModel = (EntityCustomModel) ((EntityCustomNpc)npc).modelData.getEntity(npc);
+        if(npc instanceof EntityCustomNpc && ((EntityCustomNpc) npc).modelData.getEntity(npc) instanceof EntityCustomModel customModel) {
             Vector<String> list = new Vector<>();
             for(ResourceLocation resLoc : GeckoLibCache.getBakedModels().keySet()){
                 list.add(resLoc.toString());
