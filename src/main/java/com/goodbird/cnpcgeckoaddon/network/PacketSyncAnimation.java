@@ -6,10 +6,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.network.NetworkEvent;
 import noppes.npcs.entity.EntityCustomNpc;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.animation.Animation;
+import software.bernie.geckolib.animation.RawAnimation;
 
 import java.util.Map;
 import java.util.function.Supplier;
