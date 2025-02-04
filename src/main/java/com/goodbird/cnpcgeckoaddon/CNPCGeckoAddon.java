@@ -1,9 +1,8 @@
 package com.goodbird.cnpcgeckoaddon;
 
 import com.goodbird.cnpcgeckoaddon.network.NetworkWrapper;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod(CNPCGeckoAddon.MODID)
 public class CNPCGeckoAddon {
