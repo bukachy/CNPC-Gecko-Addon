@@ -15,8 +15,8 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.function.Supplier;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = CNPCGeckoAddon.MODID)
-public class TileEntityRegistry {
+//@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = CNPCGeckoAddon.MODID)
+//public class TileEntityRegistry {
 //    @ObjectHolder(registryName ="block_entity_type", value = CNPCGeckoAddon.MODID+":custommodeltileentity")
 //    public static BlockEntityType<? extends TileEntityCustomModel> tileEntityCustomModel;
 //
@@ -31,4 +31,4 @@ public class TileEntityRegistry {
 //        BlockEntityType.Builder<BlockEntity> builder = BlockEntityType.Builder.of(factoryIn, blocks);
 //        return builder.build(Util.fetchChoiceType(References.BLOCK_ENTITY, key));
 //    }
-}
+//}
