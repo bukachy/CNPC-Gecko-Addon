@@ -2,6 +2,7 @@ package com.goodbird.cnpcgeckoaddon.mixin.impl;
 
 import com.goodbird.cnpcgeckoaddon.tile.TileEntityCustomModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,25 +21,25 @@ public abstract class TileScriptedMixin extends BlockEntity {
     @Shadow(remap = false)
     public BlockEntity renderTile;
 
-    @Shadow public abstract void saveAdditional(CompoundTag compound);
-
     public TileScriptedMixin(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
     }
 
 
     @Inject(method = "setDisplayNBT", at = @At("TAIL"), remap = false)
-    public void setDisplayNBT(CompoundTag compound, CallbackInfo ci) {
+    public void setDisplayNBT(CompoundTag compound, HolderLookup.Provider registries, CallbackInfo ci) {
         if(compound.contains("renderTileTag")){
             renderTile = new TileEntityCustomModel(this);
             CompoundTag saveTag = compound.getCompound("renderTileTag");
             renderTile.setLevel(getLevel());
-            renderTile.load(saveTag);
+
+            //TODO: Or loadWithComponents()
+            renderTile.loadCustomOnly(saveTag, registries);
         }
     }
 
     @Inject(method = "getDisplayNBT", at = @At("TAIL"), remap = false)
-    public void getDisplayNBT(CompoundTag compound, CallbackInfoReturnable<CompoundTag> cir) {
+    public void getDisplayNBT(CompoundTag compound, HolderLookup.Provider registries, CallbackInfoReturnable<CompoundTag> cir) {
         if(renderTile!=null && renderTile instanceof TileEntityCustomModel) {
             CompoundTag saveTag = new CompoundTag();
             ((TileEntityCustomModel)renderTile).saveAdditional(saveTag);
