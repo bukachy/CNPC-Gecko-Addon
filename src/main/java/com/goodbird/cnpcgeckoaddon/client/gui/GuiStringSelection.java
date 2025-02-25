@@ -3,12 +3,10 @@ package com.goodbird.cnpcgeckoaddon.client.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import noppes.npcs.client.gui.util.GuiNPCInterface;
 import noppes.npcs.shared.client.gui.components.GuiButtonNop;
 import noppes.npcs.shared.client.gui.components.GuiLabel;
 import noppes.npcs.shared.client.gui.components.GuiStringSlotNop;
-import noppes.npcs.shared.client.gui.components.GuiTextFieldNop;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -32,10 +30,10 @@ public class GuiStringSelection extends GuiNPCInterface {
     public void init() {
         super.init();
         addLabel(new GuiLabel(0, title, width / 2 - (this.font.width(title) / 2), 20, 0xffffff));
+        options.sort(String.CASE_INSENSITIVE_ORDER);
         slot = new GuiStringSlotNop(options, this, false);
         addWidget(this.slot);
-        this.addTextField(new GuiTextFieldNop(1000, this, width / 2 - (200 / 2), height / 2 - (40 / 2), 200, 40, "cnpcgeckoaddon:geo/dragon_monk.geo.json"));
-        this.addButton(new GuiButtonNop(this, 2, width / 2 - (100 / 2), height / 2 - (20 / 2) - 50, 100, 20, "gui.back"));
+        this.addButton(new GuiButtonNop(this, 2, width / 2 - 100, height - 44, 98, 20, "gui.back"));
     }
 
     @Override
@@ -46,14 +44,14 @@ public class GuiStringSelection extends GuiNPCInterface {
 
     @Override
     public void doubleClicked() {
-
+        action.accept(slot.getSelectedString());
+        close();
     }
 
     @Override
     public void buttonEvent(GuiButtonNop guibutton) {
         int id = guibutton.id;
         if (id == 2) {
-            action.accept(getTextField(1000).getValue());
             close();
         }
     }
