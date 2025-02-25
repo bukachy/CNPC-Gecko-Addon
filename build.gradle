@@ -106,7 +106,7 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs/CustomNPCs-Unofficial-NeoForge-1.21.1.20241226.jar')
+    implementation files('libs/CustomNPCs-Unofficial-NeoForge-1.21.1.20250220.jar')
     implementation "curse.maven:geckolib-388172:6027599"
     implementation("com.eliotlash.mclib:mclib:20")
 }
