@@ -30,9 +30,13 @@ public class RenderCustomModel extends GeoEntityRenderer<EntityCustomModel> {
         super(renderManager, new ModelCustom());
     }
 
+    private Boolean useTranslucentRender = null;
     @Override
     public RenderType getRenderType(EntityCustomModel animatable, ResourceLocation texture, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, float partialTick) {
-        if(texture.getPath().contains("translucent")) {
+        if(useTranslucentRender == null) {
+            useTranslucentRender = texture.getPath().contains("translucent");
+        }
+        if(useTranslucentRender) {
             return RenderType.entityTranslucent(getTextureLocation(animatable));
         }
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
