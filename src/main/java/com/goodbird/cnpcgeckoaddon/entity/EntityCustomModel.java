@@ -88,7 +88,8 @@ public class EntityCustomModel extends Animal implements GeoAnimatable, GeoEntit
         dims = EntityDimensions.scalable(width, height);
     }
 
-    public EntityDimensions getDims() {
+    @Override
+    protected @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
         if(dims==null){
             dims = EntityDimensions.scalable(0.7F, 2F);
         }
